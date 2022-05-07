@@ -7,8 +7,8 @@ Created on Tue Apr 26 22:14:29 2022
 
 import sqlite3
 import hmac, base64, struct, hashlib, time
-#from datetime import datetime
-import os
+import os,json
+
 
 
 class SQLiteDB(object):
@@ -49,18 +49,17 @@ def get_dict_with_otp():
         else:
             otp = secret
         result_dict[user_id]={'password':password,'otp':otp}
-    print('res',result_dict)
-    return result_dict 
+    return result_dict
 
 def get_auth_info():
-    dbobj = SQLiteDB(os.path.join('db','main.db'))
+    import os
+    dbobj = SQLiteDB(os.path.join(config['db_path'],'main.db'))
     c = dbobj.query('select * from auth')
     records = list(c.fetchall())
     column_names = [item[0].lower() for item in c.description]
     result = [dict(zip(column_names, row)) for row in records]
-    return result    
-
-user_login = get_dict_with_otp()
-
-#token = get_totp_token(secret) 
-
+    return result
+with open("C:\\Users\\elp238\\OneDrive - Corteva\\Personal\\Algo_reengineered\\settings_app.json") as jf:
+    config = json.loads(jf.read())
+user_info = get_dict_with_otp()
+print('user_info',user_info)
