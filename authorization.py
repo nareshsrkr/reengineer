@@ -62,4 +62,3 @@ def get_auth_info():
 with open("C:\\Users\\elp238\\OneDrive - Corteva\\Personal\\Algo_reengineered\\settings_app.json") as jf:
     config = json.loads(jf.read())
 user_info = get_dict_with_otp()
-print('user_info',user_info)
